@@ -56,6 +56,9 @@ func main() {
 	e.Use(middleware.AddTrailingSlashWithConfig(middleware.TrailingSlashConfig{
 		RedirectCode: http.StatusMovedPermanently,
 	}))
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"*"},
+	}))
 
 	e.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "hello, world")
