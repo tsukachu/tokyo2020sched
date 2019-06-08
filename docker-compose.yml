@@ -1,0 +1,10 @@
+version: "3.7"
+
+services:
+  db:
+    build: compose/db
+    ports:
+      - "5432:5432"
+
+volumes:
+  pgdata:

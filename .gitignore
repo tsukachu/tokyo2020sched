@@ -1,2 +1,5 @@
 # Heroku
 bin/
+
+# Environment variable
+.env
