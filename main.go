@@ -9,6 +9,7 @@ import (
 
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo"
+	"github.com/labstack/echo/middleware"
 	_ "github.com/lib/pq"
 	"gopkg.in/gorp.v1"
 )
@@ -51,6 +52,10 @@ func main() {
 	dbmap := initDb()
 
 	e := echo.New()
+
+	e.Use(middleware.AddTrailingSlashWithConfig(middleware.TrailingSlashConfig{
+		RedirectCode: http.StatusMovedPermanently,
+	}))
 
 	e.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "hello, world")
