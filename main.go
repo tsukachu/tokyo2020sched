@@ -61,7 +61,8 @@ func main() {
 		return c.String(http.StatusOK, "hello, world")
 	})
 
-	e.GET("/competitions/", func(c echo.Context) error {
+	g := e.Group("/competitions")
+	g.GET("/", func(c echo.Context) error {
 		var competitions []Competitions
 
 		_, err := dbmap.Select(&competitions, "SELECT * FROM competitions")
@@ -73,7 +74,7 @@ func main() {
 		return c.JSON(http.StatusOK, competitions)
 	})
 
-	e.GET("/competitions/:id/", func(c echo.Context) error {
+	g.GET("/:id/", func(c echo.Context) error {
 		id := c.Param("id")
 
 		var competition Competitions
