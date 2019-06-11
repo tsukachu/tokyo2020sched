@@ -7,10 +7,10 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
-	"github.com/labstack/echo"
-	"github.com/labstack/echo/middleware"
+	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 	_ "github.com/lib/pq"
-	"gopkg.in/gorp.v1"
+	"gopkg.in/gorp.v2"
 
 	"tokyo2020sched/handlers"
 	"tokyo2020sched/models"
