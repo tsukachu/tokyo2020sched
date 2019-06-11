@@ -26,8 +26,9 @@ func initDb() handlers.Handler {
 
 	dbmap := &gorp.DbMap{Db: db, Dialect: gorp.PostgresDialect{}}
 
-	dbmap.AddTableWithName(models.Competition{}, "competitions").SetKeys(true, "Id")
-	dbmap.AddTableWithName(models.Classification{}, "classifications").SetKeys(true, "Id")
+	dbmap.AddTableWithName(models.Competition{}, "competition").SetKeys(true, "Id")
+	dbmap.AddTableWithName(models.Classification{}, "classification").SetKeys(true, "Id")
+	dbmap.AddTableWithName(models.Place{}, "place").SetKeys(true, "Id")
 
 	err = dbmap.CreateTablesIfNotExists()
 	if err != nil {
@@ -71,6 +72,11 @@ func main() {
 	g = e.Group("/classifications")
 	g.GET("/", handler.ClassificationList)
 	g.GET("/:id/", handler.ClassificationDetail)
+
+	// 場所
+	g = e.Group("/places")
+	g.GET("/", handler.PlaceList)
+	g.GET("/:id/", handler.PlaceDetail)
 
 	e.Logger.Fatal(e.Start(":" + port))
 }
