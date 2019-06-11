@@ -1,4 +1,4 @@
-package holders
+package models
 
 import "time"
 

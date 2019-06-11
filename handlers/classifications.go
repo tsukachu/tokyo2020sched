@@ -7,7 +7,7 @@ import (
 
 	"github.com/labstack/echo"
 
-	"tokyo2020-sch-api/holders"
+	"tokyo2020-sch-api/models"
 )
 
 var query_classification_list string = `
@@ -68,12 +68,12 @@ func (handler *Handler) ClassificationList(c echo.Context) error {
 		return c.String(http.StatusBadRequest, err.Error())
 	}
 
-	result := make([]holders.ClassificationWithCompetition, len(classifications))
+	result := make([]models.ClassificationWithCompetition, len(classifications))
 	for i, v := range classifications {
-		result[i] = holders.ClassificationWithCompetition{
+		result[i] = models.ClassificationWithCompetition{
 			Id:   v.Id,
 			Name: v.Name,
-			Competition: holders.Competition{
+			Competition: models.Competition{
 				Id:        v.CompetitionId,
 				Name:      v.CompetitionName,
 				CreatedAt: v.CreatedAt,
@@ -110,10 +110,10 @@ func (handler *Handler) ClassificationDetail(c echo.Context) error {
 		return c.String(http.StatusBadRequest, err.Error())
 	}
 
-	return c.JSON(http.StatusOK, holders.ClassificationWithCompetition{
+	return c.JSON(http.StatusOK, models.ClassificationWithCompetition{
 		Id:   classification.Id,
 		Name: classification.Name,
-		Competition: holders.Competition{
+		Competition: models.Competition{
 			Id:        classification.CompetitionId,
 			Name:      classification.CompetitionName,
 			CreatedAt: classification.CreatedAt,

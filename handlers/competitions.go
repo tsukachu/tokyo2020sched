@@ -6,7 +6,7 @@ import (
 
 	"github.com/labstack/echo"
 
-	"tokyo2020-sch-api/holders"
+	"tokyo2020-sch-api/models"
 )
 
 var query_competition_list string = `
@@ -26,7 +26,7 @@ WHERE
 `
 
 func (handler *Handler) CompetitionList(c echo.Context) error {
-	var competitions []holders.Competition
+	var competitions []models.Competition
 
 	_, err := handler.DbMap.Select(&competitions, query_competition_list)
 	if err != nil {
@@ -40,7 +40,7 @@ func (handler *Handler) CompetitionList(c echo.Context) error {
 func (handler *Handler) CompetitionDetail(c echo.Context) error {
 	id := c.Param("id")
 
-	var competition holders.Competition
+	var competition models.Competition
 	err := handler.DbMap.SelectOne(&competition, query_competition_detail, id)
 	if err != nil {
 		if err == sql.ErrNoRows {

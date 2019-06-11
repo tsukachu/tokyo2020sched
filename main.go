@@ -13,7 +13,7 @@ import (
 	"gopkg.in/gorp.v1"
 
 	"tokyo2020-sch-api/handlers"
-	"tokyo2020-sch-api/holders"
+	"tokyo2020-sch-api/models"
 )
 
 func initDb() handlers.Handler {
@@ -26,8 +26,8 @@ func initDb() handlers.Handler {
 
 	dbmap := &gorp.DbMap{Db: db, Dialect: gorp.PostgresDialect{}}
 
-	dbmap.AddTableWithName(holders.Competition{}, "competitions").SetKeys(true, "Id")
-	dbmap.AddTableWithName(holders.Classification{}, "classifications").SetKeys(true, "Id")
+	dbmap.AddTableWithName(models.Competition{}, "competitions").SetKeys(true, "Id")
+	dbmap.AddTableWithName(models.Classification{}, "classifications").SetKeys(true, "Id")
 
 	err = dbmap.CreateTablesIfNotExists()
 	if err != nil {
@@ -58,7 +58,9 @@ func main() {
 		AllowOrigins: []string{"*"},
 	}))
 
-	e.GET("/", handler.Index)
+	e.GET("/", func(c echo.Context) error {
+		return c.String(http.StatusOK, "hello, world")
+	})
 
 	// 競技
 	g := e.Group("/competitions")
