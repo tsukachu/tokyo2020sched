@@ -1,4 +1,4 @@
-module tokyo2020-sch-api
+module tokyo2020sched
 
 go 1.12
 

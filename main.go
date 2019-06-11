@@ -12,8 +12,8 @@ import (
 	_ "github.com/lib/pq"
 	"gopkg.in/gorp.v1"
 
-	"tokyo2020-sch-api/handlers"
-	"tokyo2020-sch-api/models"
+	"tokyo2020sched/handlers"
+	"tokyo2020sched/models"
 )
 
 func initDb() handlers.Handler {

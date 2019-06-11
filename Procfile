@@ -1,1 +1,1 @@
-web: bin/tokyo2020-sch-api
+web: bin/tokyo2020sched

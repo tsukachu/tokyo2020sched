@@ -7,7 +7,7 @@ import (
 
 	"github.com/labstack/echo"
 
-	"tokyo2020-sch-api/models"
+	"tokyo2020sched/models"
 )
 
 var query_classification_list string = `
