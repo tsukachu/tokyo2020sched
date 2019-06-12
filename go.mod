@@ -15,4 +15,5 @@ require (
 	github.com/ziutek/mymysql v1.5.4 // indirect
 	gopkg.in/gorp.v1 v1.7.2
 	gopkg.in/gorp.v2 v2.0.0
+	gopkg.in/guregu/null.v3 v3.4.0
 )

@@ -29,6 +29,7 @@ func initDb() handlers.Handler {
 	dbmap.AddTableWithName(models.Competition{}, "competition").SetKeys(true, "Id")
 	dbmap.AddTableWithName(models.Classification{}, "classification").SetKeys(true, "Id")
 	dbmap.AddTableWithName(models.Place{}, "place").SetKeys(true, "Id")
+	dbmap.AddTableWithName(models.OlympicSchedule{}, "olympic_schedule").SetKeys(true, "Id")
 
 	err = dbmap.CreateTablesIfNotExists()
 	if err != nil {
@@ -77,6 +78,11 @@ func main() {
 	g = e.Group("/places")
 	g.GET("/", handler.PlaceList)
 	g.GET("/:id/", handler.PlaceDetail)
+
+	// スケジュール
+	g = e.Group("/schedules/olympic")
+	g.GET("/", handler.ScheduleList)
+	g.GET("/:id/", handler.ScheduleDetail)
 
 	e.Logger.Fatal(e.Start(":" + port))
 }
