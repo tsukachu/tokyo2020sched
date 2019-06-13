@@ -119,6 +119,26 @@
                 }
             }
         },
+        "/ping": {
+            "get": {
+                "description": "疎通を確認する",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Ping"
+                ],
+                "summary": "疎通確認",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/places": {
             "get": {
                 "description": "場所の一覧を取得する",

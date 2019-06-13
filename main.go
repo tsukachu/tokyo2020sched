@@ -3,7 +3,6 @@ package main
 import (
 	"database/sql"
 	"log"
-	"net/http"
 	"os"
 
 	"github.com/joho/godotenv"
@@ -66,9 +65,7 @@ func main() {
 		AllowOrigins: []string{"*"},
 	}))
 
-	e.GET("/", func(c echo.Context) error {
-		return c.String(http.StatusOK, "hello, world")
-	})
+	e.GET("/ping", handler.Ping)
 
 	// 競技
 	g := e.Group("/competitions")

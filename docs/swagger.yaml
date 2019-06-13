@@ -153,6 +153,19 @@ paths:
       summary: 競技の詳細情報を取得
       tags:
       - Competitions
+  /ping:
+    get:
+      description: 疎通を確認する
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: 疎通確認
+      tags:
+      - Ping
   /places:
     get:
       description: 場所の一覧を取得する
