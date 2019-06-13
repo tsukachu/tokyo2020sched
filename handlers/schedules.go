@@ -119,6 +119,12 @@ WHERE
     olympic_schedule.id = $1
 `
 
+// @Description スケジュールの一覧を取得する
+// @Tags OlympicSchedules
+// @Summary スケジュール一覧を取得
+// @Produce json
+// @Success 200 {array} models.OlympicSchedule
+// @Router /schedules/olympic [get]
 func (handler *Handler) ScheduleList(c echo.Context) error {
 	var schedules []OlympicScheduleForScan
 
@@ -163,6 +169,13 @@ func (handler *Handler) ScheduleList(c echo.Context) error {
 	return c.JSON(http.StatusOK, result)
 }
 
+// @Description 指定したスケジュールの詳細情報を取得する
+// @Tags OlympicSchedules
+// @Summary スケジュールの詳細情報を取得
+// @Produce json
+// @Param id path integer true "スケジュールID"
+// @Success 200 {object} models.OlympicSchedule
+// @Router /schedules/olympic/{id} [get]
 func (handler *Handler) ScheduleDetail(c echo.Context) error {
 	id := c.Param("id")
 

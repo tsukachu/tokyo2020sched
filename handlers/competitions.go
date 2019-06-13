@@ -25,6 +25,12 @@ WHERE
     id = $1
 `
 
+// @Description 競技の一覧を取得する
+// @Tags Competitions
+// @Summary 競技一覧を取得
+// @Produce json
+// @Success 200 {array} models.Competition
+// @Router /competitions [get]
 func (handler *Handler) CompetitionList(c echo.Context) error {
 	var competitions []models.Competition
 
@@ -37,6 +43,13 @@ func (handler *Handler) CompetitionList(c echo.Context) error {
 	return c.JSON(http.StatusOK, competitions)
 }
 
+// @Description 指定した競技の詳細情報を取得する
+// @Tags Competitions
+// @Summary 競技の詳細情報を取得
+// @Produce json
+// @Param id path integer true "競技ID"
+// @Success 200 {object} models.Competition
+// @Router /competitions/{id} [get]
 func (handler *Handler) CompetitionDetail(c echo.Context) error {
 	id := c.Param("id")
 

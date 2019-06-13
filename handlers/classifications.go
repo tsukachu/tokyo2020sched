@@ -61,6 +61,12 @@ WHERE
     classification.id = $1
 `
 
+// @Description 種別等の一覧を取得する
+// @Tags Classifications
+// @Summary 種別等一覧を取得
+// @Produce json
+// @Success 200 {array} models.ClassificationWithCompetition
+// @Router /classifications [get]
 func (handler *Handler) ClassificationList(c echo.Context) error {
 	var classifications []ClassificationForScan
 
@@ -89,6 +95,13 @@ func (handler *Handler) ClassificationList(c echo.Context) error {
 	return c.JSON(http.StatusOK, result)
 }
 
+// @Description 指定した種別等の詳細情報を取得する
+// @Tags Classifications
+// @Summary 種別等の詳細情報を取得
+// @Produce json
+// @Param id path integer true "種別等ID"
+// @Success 200 {object} models.ClassificationWithCompetition
+// @Router /classifications/{id} [get]
 func (handler *Handler) ClassificationDetail(c echo.Context) error {
 	id := c.Param("id")
 

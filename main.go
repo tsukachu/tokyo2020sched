@@ -10,8 +10,10 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	_ "github.com/lib/pq"
+	"github.com/swaggo/echo-swagger"
 	"gopkg.in/gorp.v2"
 
+	_ "tokyo2020sched/docs"
 	"tokyo2020sched/handlers"
 	"tokyo2020sched/models"
 )
@@ -41,6 +43,13 @@ func initDb() handlers.Handler {
 	return handler
 }
 
+// @title TOKYO2020 schedule API
+// @version 0.1
+// @description TOKYO2020 schedule API
+
+// @host tokyo2020sched.herokuapp.com
+// @BasePath /
+// @schemes https
 func main() {
 	err := godotenv.Load()
 	if err != nil {
@@ -53,9 +62,6 @@ func main() {
 
 	e := echo.New()
 
-	e.Use(middleware.AddTrailingSlashWithConfig(middleware.TrailingSlashConfig{
-		RedirectCode: http.StatusMovedPermanently,
-	}))
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 		AllowOrigins: []string{"*"},
 	}))
@@ -66,23 +72,26 @@ func main() {
 
 	// 競技
 	g := e.Group("/competitions")
-	g.GET("/", handler.CompetitionList)
-	g.GET("/:id/", handler.CompetitionDetail)
+	g.GET("", handler.CompetitionList)
+	g.GET("/:id", handler.CompetitionDetail)
 
 	// 種別等
 	g = e.Group("/classifications")
-	g.GET("/", handler.ClassificationList)
-	g.GET("/:id/", handler.ClassificationDetail)
+	g.GET("", handler.ClassificationList)
+	g.GET("/:id", handler.ClassificationDetail)
 
 	// 場所
 	g = e.Group("/places")
-	g.GET("/", handler.PlaceList)
-	g.GET("/:id/", handler.PlaceDetail)
+	g.GET("", handler.PlaceList)
+	g.GET("/:id", handler.PlaceDetail)
 
 	// スケジュール
 	g = e.Group("/schedules/olympic")
-	g.GET("/", handler.ScheduleList)
-	g.GET("/:id/", handler.ScheduleDetail)
+	g.GET("", handler.ScheduleList)
+	g.GET("/:id", handler.ScheduleDetail)
+
+	// Swagger
+	e.GET("/swagger/*", echoSwagger.WrapHandler)
 
 	e.Logger.Fatal(e.Start(":" + port))
 }
