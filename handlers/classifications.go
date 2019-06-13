@@ -10,6 +10,17 @@ import (
 	"tokyo2020sched/models"
 )
 
+type ClassificationForScan struct {
+	Id                   int64
+	Name                 string
+	CreatedAt            time.Time `db:"created_at"`
+	UpdatedAt            time.Time `db:"updated_at"`
+	CompetitionId        int64     `db:"competition_id"`
+	CompetitionName      string    `db:"competition_name"`
+	CompetitionCreatedAt time.Time `db:"competition_created_at"`
+	CompetitionUpdatedAt time.Time `db:"competition_updated_at"`
+}
+
 var query_classification_list string = `
 SELECT
     classification.id,
@@ -51,16 +62,7 @@ WHERE
 `
 
 func (handler *Handler) ClassificationList(c echo.Context) error {
-	var classifications []struct {
-		Id                   int64
-		Name                 string
-		CreatedAt            time.Time `db:"created_at"`
-		UpdatedAt            time.Time `db:"updated_at"`
-		CompetitionId        int64     `db:"competition_id"`
-		CompetitionName      string    `db:"competition_name"`
-		CompetitionCreatedAt time.Time `db:"competition_created_at"`
-		CompetitionUpdatedAt time.Time `db:"competition_updated_at"`
-	}
+	var classifications []ClassificationForScan
 
 	_, err := handler.DbMap.Select(&classifications, query_classification_list)
 	if err != nil {
@@ -90,16 +92,7 @@ func (handler *Handler) ClassificationList(c echo.Context) error {
 func (handler *Handler) ClassificationDetail(c echo.Context) error {
 	id := c.Param("id")
 
-	var classification struct {
-		Id                   int64
-		Name                 string
-		CreatedAt            time.Time `db:"created_at"`
-		UpdatedAt            time.Time `db:"updated_at"`
-		CompetitionId        int64     `db:"competition_id"`
-		CompetitionName      string    `db:"competition_name"`
-		CompetitionCreatedAt time.Time `db:"competition_created_at"`
-		CompetitionUpdatedAt time.Time `db:"competition_updated_at"`
-	}
+	var classification ClassificationForScan
 	err := handler.DbMap.SelectOne(&classification, query_classification_detail, id)
 	if err != nil {
 		if err == sql.ErrNoRows {

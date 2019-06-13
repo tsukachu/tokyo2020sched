@@ -12,6 +12,29 @@ import (
 	"tokyo2020sched/models"
 )
 
+type OlympicScheduleForScan struct {
+	Id                          int64
+	CompetitionId               int64       `db:"competition_id"`
+	CompetitionName             string      `db:"competition_name"`
+	CompetitionCreatedAt        time.Time   `db:"competition_created_at"`
+	CompetitionUpdatedAt        time.Time   `db:"competition_updated_at"`
+	ClassificationId            zero.Int    `db:"classification_id"`
+	ClassificationName          zero.String `db:"classification_name"`
+	ClassificationCompetitionId zero.Int    `db:"classification_competition_id"`
+	ClassificationCreatedAt     zero.Time   `db:"classification_created_at"`
+	ClassificationUpdatedAt     zero.Time   `db:"classification_updated_at"`
+	Title                       string
+	Begin                       time.Time
+	End                         time.Time
+	PlaceId                     int64     `db:"place_id"`
+	PlaceName                   string    `db:"place_name"`
+	PlaceCreatedAt              time.Time `db:"place_created_at"`
+	PlaceUpdatedAt              time.Time `db:"place_updated_at"`
+	Content                     null.String
+	CreatedAt                   time.Time `db:"created_at"`
+	UpdatedAt                   time.Time `db:"updated_at"`
+}
+
 var query_schedule_list string = `
 SELECT
     olympic_schedule.id,
@@ -97,28 +120,7 @@ WHERE
 `
 
 func (handler *Handler) ScheduleList(c echo.Context) error {
-	var schedules []struct {
-		Id                          int64
-		CompetitionId               int64       `db:"competition_id"`
-		CompetitionName             string      `db:"competition_name"`
-		CompetitionCreatedAt        time.Time   `db:"competition_created_at"`
-		CompetitionUpdatedAt        time.Time   `db:"competition_updated_at"`
-		ClassificationId            zero.Int    `db:"classification_id"`
-		ClassificationName          zero.String `db:"classification_name"`
-		ClassificationCompetitionId zero.Int    `db:"classification_competition_id"`
-		ClassificationCreatedAt     zero.Time   `db:"classification_created_at"`
-		ClassificationUpdatedAt     zero.Time   `db:"classification_updated_at"`
-		Title                       string
-		Begin                       time.Time
-		End                         time.Time
-		PlaceId                     int64     `db:"place_id"`
-		PlaceName                   string    `db:"place_name"`
-		PlaceCreatedAt              time.Time `db:"place_created_at"`
-		PlaceUpdatedAt              time.Time `db:"place_updated_at"`
-		Content                     null.String
-		CreatedAt                   time.Time `db:"created_at"`
-		UpdatedAt                   time.Time `db:"updated_at"`
-	}
+	var schedules []OlympicScheduleForScan
 
 	_, err := handler.DbMap.Select(&schedules, query_schedule_list)
 	if err != nil {
@@ -164,28 +166,7 @@ func (handler *Handler) ScheduleList(c echo.Context) error {
 func (handler *Handler) ScheduleDetail(c echo.Context) error {
 	id := c.Param("id")
 
-	var schedule struct {
-		Id                          int64
-		CompetitionId               int64       `db:"competition_id"`
-		CompetitionName             string      `db:"competition_name"`
-		CompetitionCreatedAt        time.Time   `db:"competition_created_at"`
-		CompetitionUpdatedAt        time.Time   `db:"competition_updated_at"`
-		ClassificationId            zero.Int    `db:"classification_id"`
-		ClassificationName          zero.String `db:"classification_name"`
-		ClassificationCompetitionId zero.Int    `db:"classification_competition_id"`
-		ClassificationCreatedAt     zero.Time   `db:"classification_created_at"`
-		ClassificationUpdatedAt     zero.Time   `db:"classification_updated_at"`
-		Title                       string
-		Begin                       time.Time
-		End                         time.Time
-		PlaceId                     int64     `db:"place_id"`
-		PlaceName                   string    `db:"place_name"`
-		PlaceCreatedAt              time.Time `db:"place_created_at"`
-		PlaceUpdatedAt              time.Time `db:"place_updated_at"`
-		Content                     null.String
-		CreatedAt                   time.Time `db:"created_at"`
-		UpdatedAt                   time.Time `db:"updated_at"`
-	}
+	var schedule OlympicScheduleForScan
 	err := handler.DbMap.SelectOne(&schedule, query_schedule_detail, id)
 	if err != nil {
 		if err == sql.ErrNoRows {
