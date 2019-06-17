@@ -51,13 +51,10 @@ type OlympicSchedule struct {
 }
 
 func (c Classification) MarshalJSON() ([]byte, error) {
-	// guregu/null/zero で初期化はするが API 的には不正なので null にする
 	if c.Id == 0 {
 		return []byte("null"), nil
 	}
 
-	// Classification をそのまま使うと無限ループするので Alias で回避
-	type Alias Classification
-
-	return json.Marshal(&struct{ Alias }{Alias: (Alias)(c)})
+	type __classification Classification
+	return json.Marshal(__classification(c))
 }
